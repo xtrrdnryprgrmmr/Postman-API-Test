@@ -1,0 +1,141 @@
+{
+	"info": {
+		"_postman_id": "f260591b-c63e-42f5-b266-22bad43dbe3b",
+		"name": "petSwagger Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetPetByStatus",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"/*HEADER*/\r",
+							"\r",
+							"pm.test(\"Content-Type header is present\", () => {\r",
+							"  pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is application/json\", () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+							"});\r",
+							"pm.test(\"Transfer-Encoding header is application/json\", () => {\r",
+							"  pm.expect(pm.response.headers.get('Transfer-Encoding')).to.eql('chunked');\r",
+							"});\r",
+							"pm.test(\"Connection header is application/json\", () => {\r",
+							"  pm.expect(pm.response.headers.get('Connection')).to.eql('keep-alive');\r",
+							"});\r",
+							"\r",
+							"var jsonData=pm.response.json();\r",
+							"var datalength= jsonData.length;\r",
+							"pm.test(\"id should be number\",function(){\r",
+							"for( i=0;i<datalength;i++){\r",
+							"var ids=jsonData[i].id;\r",
+							"pm.expect(ids).to.be.a(\"number\");\r",
+							"}\r",
+							"}\r",
+							");\r",
+							"/*pm.test(\"name should be string\",function(){\r",
+							"for( i=0;i<datalength;i++){\r",
+							"var names=jsonData[i].name;\r",
+							"console.log(i +\"name - \"+names);\r",
+							"pm.expect(names).to.be.a(\"string\");\r",
+							"}\r",
+							"}\r",
+							");*/\r",
+							"pm.test(\"photoUrls should be array\",function(){\r",
+							"for( i=0;i<datalength;i++){\r",
+							"var photoUrls=jsonData[i].photoUrls;\r",
+							"pm.expect(photoUrls).to.be.a(\"array\");\r",
+							"}\r",
+							"}\r",
+							");\r",
+							"pm.test(\"tags should be array\",function(){\r",
+							"for( i=0;i<datalength;i++){\r",
+							"var tags=jsonData[i].tags;\r",
+							"pm.expect(tags).to.be.a(\"array\");\r",
+							"}\r",
+							"}\r",
+							");\r",
+							"pm.test(\"tags have id and name\",function(){\r",
+							"for( i=0;i<datalength;i++){\r",
+							"var tags=jsonData[i].tags;\r",
+							"//console.log(i +\"tags-\"+tags[0].id +\"-\" + tags[0].name );\r",
+							"pm.expect(tags[0]).to.have.any.keys(\"id\",\"name\");\r",
+							"}\r",
+							"}\r",
+							");\r",
+							"pm.test(\"tags id is integer and name is string\",function(){\r",
+							"for( i=0;i<datalength;i++){\r",
+							"var tags=jsonData[i].tags;\r",
+							"pm.expect(tags[0].id).to.be.a(\"number\");\r",
+							"pm.expect(tags[0].name).to.be.a(\"string\");\r",
+							"}\r",
+							"}\r",
+							");\r",
+							"pm.test(\"status to be one of vailable, pending, sold\",function(){\r",
+							"for( i=0;i<datalength;i++){\r",
+							"var status=jsonData[i].status;\r",
+							"//console.log(i +\"tags-\"+status);\r",
+							"pm.expect(status).to.be.oneOf([\"available\", \"pending\", \"sold\"]);\r",
+							"}\r",
+							"}\r",
+							");\r",
+							"pm.test(\"status not to be one of test\",function(){\r",
+							"for( i=0;i<datalength;i++){\r",
+							"var status=jsonData[i].status;\r",
+							"//console.log(i +\"tags-\"+status);\r",
+							"pm.expect(status).not.to.be.oneOf([\"test\"]);\r",
+							"}\r",
+							"}\r",
+							");\r",
+							"pm.test(\"categories must be object\",function(){\r",
+							"for( i=0;i<datalength;i++){\r",
+							"var categories=jsonData[i].category;\r",
+							"pm.expect(categories).to.be.a(\"object\");\r",
+							"}\r",
+							"}\r",
+							");\r",
+							" pm.test(\"category id is integer and name is string\",function(){\r",
+							"for( i=0;i<datalength;i++){\r",
+							"var categories=jsonData[i].category;\r",
+							"pm.expect(categories.id).to.be.a(\"number\");\r",
+							"pm.expect(categories.name).to.be.a(\"string\");\r",
+							"}\r",
+							"}\r",
+							");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet/findByStatus?status=sold",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"findByStatus"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "sold"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
